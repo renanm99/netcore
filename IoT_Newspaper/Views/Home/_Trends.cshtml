@@ -1,0 +1,23 @@
+﻿@using Microsoft.CodeAnalysis.CSharp
+@model IEnumerable<IoT_Newspaper.Model.News>
+
+@{
+    Layout = null;
+}
+
+<div class="news-ticker-wrap">
+    <span class="ticker-title tt-u">TOP TRENDS</span>
+    <ul class="news-ticker">
+            @foreach (var item in Model)
+            {
+                <li><a href="@{ var s = item.Url ?? "#"; }">@item.Title</a></li>
+            }
+        <li>
+    </ul>
+
+    <div class="ticker-control">
+        <i class="ti-angle-left" id="prev-ticker"></i>
+        <i class="ti-angle-right" id="next-ticker"></i>
+    </div>
+
+</div>

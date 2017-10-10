@@ -1,0 +1,102 @@
+﻿@using Microsoft.CodeAnalysis.CSharp
+@model IEnumerable<IoT_Newspaper.Model.News>
+
+@{
+    Layout = null;
+}
+
+<div class="news-block padding-15 bg-white bd-grey mb-40">
+    <h2 class="block-heading mb-40">Featured Videos</h2>
+    <div class="side-tab">
+
+        <div class="col-md-6 padding-10">
+            <div class="tab-content">
+                @if (Model.ElementAtOrDefault(0) != null)
+                {
+                    <div class="tab-pane v-player fade in active" id="@Model.ElementAt(0).Id">
+                        <iframe src="@Model.ElementAt(0).Url" allowfullscreen></iframe>
+
+                    </div>
+                }
+            @foreach (var item in Model)
+            {
+                if (Model.First() != item)
+                {
+                    <div class="tab-pane v-player fade in" id="@item.Id">
+                        <iframe src="@item.Url" allowfullscreen></iframe>
+                    </div>
+                }
+            }
+            </div>
+        </div>
+        <div class="col-md-6 padding-10">
+            <ul class="video-thumbs">
+            @if (Model.ElementAtOrDefault(0) != null)
+            {
+                <li class="active">
+                    <img src="@Model.ElementAt(0).Image" alt="@Model.ElementAt(0).Title">
+                    <a href="#@Model.ElementAt(0).Id" data-toggle="tab">
+                        <div class="display-table">
+                            <div class="table-cell">
+                                <i class="ti-control-play"></i>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+            }
+            @foreach (var item in Model)
+            {
+                if (Model.First() != item)
+                {
+                    <li>
+                        <img src="@item.Image" alt="@item.Title">
+                        <a href="#@item.Id" data-toggle="tab">
+                            <div class="display-table">
+                                <div class="table-cell">
+                                    <i class="ti-control-play"></i>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                }
+            }
+               
+            </ul>
+        </div>
+
+    </div>
+</div>
+
+@*
+    <div class="banner-in-content padding-15 bg-white bd-grey ov-hidden mb-40">
+        <a href="#"><img src="img/banner.jpg" alt="Banner AD"></a>
+    </div><!-- /.banner-in-content -->
+
+    <div class="news-block padding-15 bg-white bd-grey">
+        <h2 class="block-heading mb-40">Sports News</h2>
+        <div class="news-items">
+            <div class="col-xs-12 padding-10">
+                <div class="list-post-item">
+                    <a href="#" class="img-thumb"><img src="img/sports-1.jpg" alt="Sports News"></a>
+                    <div class="post-info padding-15 ptb-20 bd-grey">
+                        <h4 class="mb-15 fw-6"><a href="#" class="text-dark">The future of possible innovation for local business company.</a></h4>
+                        <p class="fz-13">Stay focused and remember we design the best WordPress News and Magazine Themes. It’s the ones closest to you that want to…</p>
+                        <span class="date"><i class="ti-timer"></i> November 16 , 2017</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-xs-6 padding-10">
+                <a href="#"><img src="img/sports-2.jpg" class="img-full" alt="Sports News"></a>
+            </div>
+            <div class="col-md-3 col-xs-6 padding-10">
+                <a href="#"><img src="img/sports-3.jpg" class="img-full" alt="Sports News"></a>
+            </div>
+            <div class="col-md-3 col-xs-6 padding-10">
+                <a href="#"><img src="img/sports-4.jpg" class="img-full" alt="Sports News"></a>
+            </div>
+            <div class="col-md-3 col-xs-6 padding-10">
+                <a href="#"><img src="img/sports-5.jpg" class="img-full" alt="Sports News"></a>
+            </div>
+        </div>
+    </div><!-- /.news-block -->
+*@

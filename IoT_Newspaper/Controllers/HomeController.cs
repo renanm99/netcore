@@ -8,6 +8,7 @@ using IoT_Newspaper.Models;
 using System.Xml.Linq;
 using System.Net.Http;
 using IoT_Newspaper.Data;
+using IoT_Newspaper.Extensions;
 using IoT_Newspaper.Models.HomeViewModels;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,8 +16,13 @@ namespace IoT_Newspaper.Controllers
 {
     public class HomeController : Controller
     {
-
+        private readonly IViewRenderService _viewRenderService;
         private readonly ApplicationDbContext _context;
+
+        /*public HomeController(IViewRenderService viewRenderService)
+        {
+            _viewRenderService = viewRenderService;
+        }*/
 
         public HomeController(ApplicationDbContext context)
         {
@@ -34,18 +40,33 @@ namespace IoT_Newspaper.Controllers
             feeds.AddRange(await GetFeed("https://www.ibm.com/blogs/internet-of-things/feed/"));
 
             model.Feeds = feeds.OrderBy(o => o.PublishDate);
-            var applicationDbContext = _context.Section.Where(s => s.Disabled == false).Include(n => n.News);
+            var query = _context.Section.Where(s => s.Disabled == false);
 
-            model.Sections = applicationDbContext.ToList();
+            var sessions = query.ToList();
+
+            for (var count = 0; count < sessions.Count(); count++)
+            {
+                var id = sessions.ElementAt(count).Id;
+
+                var news = _context.News.Where(s => s.Disabled == false).OrderBy(o => Guid.NewGuid()).Take(8);
+
+                sessions.ElementAt(count).News = news.ToList();
+
+            }
+
+
+            model.Sections = sessions;
 
             return View("Index", model);
 
         }
 
         [HttpGet]
-        public async Task<IActionResult> Admin()
+        public async Task<IActionResult> GetNews(int order)
         {
-            return RedirectToAction("Login", "Account");
+            var news = _context.News.Include(n => n.Section.Order == order).Where(s => s.Disabled == false).OrderBy(o => Guid.NewGuid()).Take(8);
+
+            return PartialView("_MainNews", news.ToList());
         }
 
         public async Task<IEnumerable<FeedModel>> GetFeed(string feedUrl)

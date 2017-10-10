@@ -1,0 +1,44 @@
+﻿@model IEnumerable<IoT_Newspaper.Model.News>
+
+@{
+    Layout = null;
+}
+
+
+<div class="news-block padding-15 bg-white bd-grey mb-40">
+    <h2 class="block-heading mb-40">World News</h2>
+    <div class="two-col-posts">
+        @if (Model.ElementAtOrDefault(0) != null)
+        {
+            <div class="col-md-6 padding-10">
+                <div class="post-item">
+                    <a href="@Url.Action("Details", "Articles", @Model.ElementAt(0).Url)" class="mb-20"><img src="@Model.ElementAt(0).Image"></a>
+                    <div class="post-info padding-15 ptb-20 bd-grey">
+                        <h4 class="mb-15 fw-6"><a href="@Url.Action("Details", "Articles", @Model.ElementAt(0).Url)" class="text-dark">@Model.ElementAt(0).Title</a></h4>
+                        <span class="date"><i class="ti-timer"></i>@Model.ElementAt(0).Date.ToString("MMMM dd, yyyy")</span>
+                    </div>
+                </div>
+            </div>
+
+        }
+
+        <div class="col-md-6 padding-10">
+            <div class="small-posts">
+                @foreach (var item in Model)
+                {
+                    if (Model.First() != item)
+                    {
+                        <div class="sm-post-item">
+                            <img src="@item.Image">
+                            <div class="sm-post-content bd-grey">
+                                <h4 class="fz-14"><a href="@Url.Action("Details", "Articles", @item.Url)">@item.Title</a></h4>
+                                <p class="fz-12 fw-6 tt-u no-margin">@item.Date.ToString("MMMM dd, yyyy")</p>
+                            </div>
+                        </div>
+                    }
+                }
+
+            </div>
+        </div>
+    </div>
+</div>

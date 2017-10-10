@@ -1,0 +1,107 @@
+﻿@model IEnumerable<IoT_Newspaper.Model.News>
+
+@{
+    Layout = null;
+}
+<div class="featured-wrap">
+
+
+    @if (Model.ElementAtOrDefault(0) != null)
+    {
+        <div class="col-md-5 col-sm-12">
+            <div class="post-carousel owl-carousel">
+                <div class="featured-post" style="background: url(@Model.ElementAt(0).Image);">
+                    <div class="post-info">
+                        <a href="@Model.ElementAt(0).Url" class="cat-name tt-u">@Model.ElementAt(0).Categories</a>
+                        <h3 id="fpimg" class="fw-6 fz-16">
+                            <a href="@Model.ElementAt(0).Url" class="text-white">@Model.ElementAt(0).Title</a>
+                        </h3>
+                    </div>
+                </div>
+                <div class="featured-post" style="background: url(@Model.ElementAt(0).Image);">
+                    <div class="post-info">
+                        <a href="@Url.Action("Details", "Articles", @Model.ElementAt(0).Url)" class="cat-name tt-u">@Model.ElementAt(0).Categories</a>
+                        <h3 class="fw-6 fz-16">
+                            <a href="@Model.ElementAt(0).Url" class="text-white">@Model.ElementAt(0).Title</a>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <!-- /.post-carousel -->
+        </div>
+    }
+    @if (Model.ElementAtOrDefault(1) != null)
+    {
+        <div class="col-md-3 col-sm-6">
+            <div class="post-carousel owl-carousel">
+                <div class="featured-post" style="background: url(@Model.ElementAt(1).Image)">
+                    <div class="post-info">
+                        <a href="@Model.ElementAt(1).Url" class="cat-name tt-u">@Model.ElementAt(1).Categories</a>
+                        <h3 class="fw-6 fz-16">
+                            <a href="@Model.ElementAt(1).Url" class="text-white">@Model.ElementAt(1).Title</a>
+                        </h3>
+                    </div>
+                </div>
+                <div class="featured-post" style="background: url(@Model.ElementAt(1).Image)">
+                    <div class="post-info">
+                        <a href="@Model.ElementAt(1).Url" class="cat-name tt-u">@Model.ElementAt(1).Categories</a>
+                        <h3 class="fw-6 fz-16">
+                            <a href="@Url.Action("Details", "Articles", @Model.ElementAt(1).Url)" class="text-white">@Model.ElementAt(1).Title</a>
+                        </h3>
+                    </div>
+                </div>
+            </div><!-- /.post-carousel -->
+        </div>
+    }
+
+    <div class="col-md-4 col-sm-6">
+        @if (Model.ElementAtOrDefault(2) != null)
+        {
+            <div class="top-wrap mb-10">
+                <div class="post-carousel owl-carousel">
+                    <div class="featured-post" style="background: url('@Model.ElementAt(2).Image');">
+                        <div class="post-info">
+                            <a href="@Model.ElementAt(2).Url" class="cat-name tt-u">@Model.ElementAt(2).Categories</a>
+                            <h3 class="fw-6 fz-16">
+                                <a href="@Model.ElementAt(2).Url" class="text-white">@Model.ElementAt(2).Title</a>
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="featured-post" style="background: url('@Model.ElementAt(2).Image');">
+                        <div class="post-info">
+                            <a href="@Model.ElementAt(2).Url" class="cat-name tt-u">@Model.ElementAt(2).Categories</a>
+                            <h3 class="fw-6 fz-16">
+                                <a href="@Model.ElementAt(2).Url" class="text-white">@Model.ElementAt(2).Title</a>
+                            </h3>
+                        </div>
+                    </div>
+                </div><!-- /.post-carousel -->
+            </div>
+        }
+        @if (Model.ElementAtOrDefault(3) != null)
+        {
+            <div class="bottom-wrap">
+                <div class="post-carousel owl-carousel">
+                    <div class="featured-post" style="background: url('@Model.ElementAt(3).Image');">
+                        <div class="post-info">
+                            <a href="@Model.ElementAt(3).Url" class="cat-name tt-u">@Model.ElementAt(3).Categories</a>
+                            <h3 class="fw-6 fz-16">
+                                <a href="@Model.ElementAt(3).Url" class="text-white">@Model.ElementAt(3).Title</a>
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="featured-post" style="background: url('@Model.ElementAt(3).Image');">
+                        <div class="post-info">
+                            <a href="@Model.ElementAt(3).Url" class="cat-name tt-u">@Model.ElementAt(3).Categories</a>
+                            <h3 class="fw-6 fz-16">
+                                <a href="@Model.ElementAt(3).Url" class="text-white">@Model.ElementAt(3).Title</a>
+                            </h3>
+                        </div>
+                    </div>
+                </div><!-- /.post-carousel -->
+            </div>
+        }
+
+    </div>
+
+</div>
