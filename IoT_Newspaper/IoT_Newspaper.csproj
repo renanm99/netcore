@@ -3,6 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <UserSecretsId>aspnet-IoT_Newspaper-B492A463-786B-4C70-86EB-1B36241B7F54</UserSecretsId>
+    <ApplicationInsightsResourceId>/subscriptions/7f058324-fe04-40f9-9340-94ce73295711/resourcegroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/IoT_Newspaper</ApplicationInsightsResourceId>
+    <ApplicationInsightsAnnotationResourceId>/subscriptions/7f058324-fe04-40f9-9340-94ce73295711/resourcegroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/IoT_Newspaper</ApplicationInsightsAnnotationResourceId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,6 +13,7 @@
 
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.0" PrivateAssets="All" />
@@ -24,6 +27,10 @@
 
   <ItemGroup>
     <Folder Include="Properties\PublishProfiles\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services" />
   </ItemGroup>
 
 </Project>

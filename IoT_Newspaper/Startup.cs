@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using IoT_Newspaper.Data;
-using IoT_Newspaper.Extensions;
 using IoT_Newspaper.Models;
 using IoT_Newspaper.Services;
 
@@ -36,8 +35,6 @@ namespace IoT_Newspaper
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
-
-            services.AddScoped<IViewRenderService, ViewRenderService>();
 
             services.AddMvc();
         }

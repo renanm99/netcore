@@ -18,14 +18,17 @@
                         </h3>
                     </div>
                 </div>
-                <div class="featured-post" style="background: url(@Model.ElementAt(0).Image);">
-                    <div class="post-info">
-                        <a href="@Url.Action("Details", "Articles", @Model.ElementAt(0).Url)" class="cat-name tt-u">@Model.ElementAt(0).Categories</a>
-                        <h3 class="fw-6 fz-16">
-                            <a href="@Model.ElementAt(0).Url" class="text-white">@Model.ElementAt(0).Title</a>
-                        </h3>
+                @if (Model.ElementAtOrDefault(4) != null)
+                {
+                    <div class="featured-post" style="background: url(@Model.ElementAt(4).Image);">
+                        <div class="post-info">
+                            <a href="@Url.Action("Details", "Articles", @Model.ElementAt(4).Url)" class="cat-name tt-u">@Model.ElementAt(4).Categories</a>
+                            <h3 class="fw-6 fz-16">
+                                <a href="@Model.ElementAt(4).Url" class="text-white">@Model.ElementAt(4).Title</a>
+                            </h3>
+                        </div>
                     </div>
-                </div>
+                }
             </div>
             <!-- /.post-carousel -->
         </div>
@@ -42,14 +45,17 @@
                         </h3>
                     </div>
                 </div>
-                <div class="featured-post" style="background: url(@Model.ElementAt(1).Image)">
-                    <div class="post-info">
-                        <a href="@Model.ElementAt(1).Url" class="cat-name tt-u">@Model.ElementAt(1).Categories</a>
-                        <h3 class="fw-6 fz-16">
-                            <a href="@Url.Action("Details", "Articles", @Model.ElementAt(1).Url)" class="text-white">@Model.ElementAt(1).Title</a>
-                        </h3>
+                @if (Model.ElementAtOrDefault(5) != null)
+                {
+                    <div class="featured-post" style="background: url(@Model.ElementAt(5).Image)">
+                        <div class="post-info">
+                            <a href="@Model.ElementAt(5).Url" class="cat-name tt-u">@Model.ElementAt(5).Categories</a>
+                            <h3 class="fw-6 fz-16">
+                                <a href="@Url.Action("Details", "Articles", @Model.ElementAt(5).Url)" class="text-white">@Model.ElementAt(5).Title</a>
+                            </h3>
+                        </div>
                     </div>
-                </div>
+                }
             </div><!-- /.post-carousel -->
         </div>
     }
@@ -67,14 +73,17 @@
                             </h3>
                         </div>
                     </div>
-                    <div class="featured-post" style="background: url('@Model.ElementAt(2).Image');">
-                        <div class="post-info">
-                            <a href="@Model.ElementAt(2).Url" class="cat-name tt-u">@Model.ElementAt(2).Categories</a>
-                            <h3 class="fw-6 fz-16">
-                                <a href="@Model.ElementAt(2).Url" class="text-white">@Model.ElementAt(2).Title</a>
-                            </h3>
+                    @if (Model.ElementAtOrDefault(6) != null)
+                    {
+                        <div class="featured-post" style="background: url('@Model.ElementAt(6).Image');">
+                            <div class="post-info">
+                                <a href="@Model.ElementAt(6).Url" class="cat-name tt-u">@Model.ElementAt(6).Categories</a>
+                                <h3 class="fw-6 fz-16">
+                                    <a href="@Model.ElementAt(6).Url" class="text-white">@Model.ElementAt(6).Title</a>
+                                </h3>
+                            </div>
                         </div>
-                    </div>
+                    }
                 </div><!-- /.post-carousel -->
             </div>
         }
@@ -90,14 +99,17 @@
                             </h3>
                         </div>
                     </div>
-                    <div class="featured-post" style="background: url('@Model.ElementAt(3).Image');">
-                        <div class="post-info">
-                            <a href="@Model.ElementAt(3).Url" class="cat-name tt-u">@Model.ElementAt(3).Categories</a>
-                            <h3 class="fw-6 fz-16">
-                                <a href="@Model.ElementAt(3).Url" class="text-white">@Model.ElementAt(3).Title</a>
-                            </h3>
+                    @if (Model.ElementAtOrDefault(7) != null)
+                    {
+                        <div class="featured-post" style="background: url('@Model.ElementAt(7).Image');">
+                            <div class="post-info">
+                                <a href="@Model.ElementAt(7).Url" class="cat-name tt-u">@Model.ElementAt(7).Categories</a>
+                                <h3 class="fw-6 fz-16">
+                                    <a href="@Model.ElementAt(7).Url" class="text-white">@Model.ElementAt(7).Title</a>
+                                </h3>
+                            </div>
                         </div>
-                    </div>
+                    }
                 </div><!-- /.post-carousel -->
             </div>
         }

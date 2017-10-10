@@ -8,7 +8,6 @@ using IoT_Newspaper.Models;
 using System.Xml.Linq;
 using System.Net.Http;
 using IoT_Newspaper.Data;
-using IoT_Newspaper.Extensions;
 using IoT_Newspaper.Models.HomeViewModels;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,7 +15,6 @@ namespace IoT_Newspaper.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IViewRenderService _viewRenderService;
         private readonly ApplicationDbContext _context;
 
         /*public HomeController(IViewRenderService viewRenderService)
@@ -33,13 +31,13 @@ namespace IoT_Newspaper.Controllers
         public async Task<IActionResult> Index()
         {
             var model = new PortalViewModel();
-            var feeds = new List<FeedModel>();
+            //var feeds = new List<FeedModel>();
 
-            feeds.AddRange(await GetFeed("http://internetofthingsagenda.techtarget.com/rss/IoT-Agenda.xml"));
-            feeds.AddRange(await GetFeed("https://www.iotforall.com/feed/"));
-            feeds.AddRange(await GetFeed("https://www.ibm.com/blogs/internet-of-things/feed/"));
+            //feeds.AddRange(await GetFeed("http://internetofthingsagenda.techtarget.com/rss/IoT-Agenda.xml"));
+            //feeds.AddRange(await GetFeed("https://www.iotforall.com/feed/"));
+            //feeds.AddRange(await GetFeed("https://www.ibm.com/blogs/internet-of-things/feed/"));
 
-            model.Feeds = feeds.OrderBy(o => o.PublishDate);
+            //model.Feeds = feeds.OrderBy(o => o.PublishDate);
             var query = _context.Section.Where(s => s.Disabled == false);
 
             var sessions = query.ToList();
