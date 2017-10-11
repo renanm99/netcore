@@ -1,0 +1,15 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "FUNCTIONS_EXTENSION_VERSION": "~1",
+    "ScmType": "None",
+    "AzureWebJobsSecretStorageType": "disabled",
+    "WEBSITE_AUTH_ENABLED": "False",
+    "APPINSIGHTS_INSTRUMENTATIONKEY": "8a173bf3-45a4-49cc-b0c4-8b5f2c0a2095",
+    "AzureWebJobsDashboard": "DefaultEndpointsProtocol=https;AccountName=iotrss;AccountKey=qNET4+chjoi8jEXTjePo42Qb0p0q4blkG9M8GFGOuGaBg67fbSEiL2XcsuqvjLP/DBt76X/XrRI7U03ru8PkUA==",
+    "WEBSITE_NODE_DEFAULT_VERSION": "6.5.0",
+    "WEBSITE_SITE_NAME": "iotrss",
+    "WEBSITE_SLOT_NAME": "Production",
+    "AzureWebJobsStorage": "DefaultEndpointsProtocol=https;AccountName=iotrss;AccountKey=qNET4+chjoi8jEXTjePo42Qb0p0q4blkG9M8GFGOuGaBg67fbSEiL2XcsuqvjLP/DBt76X/XrRI7U03ru8PkUA=="
+  }
+}
