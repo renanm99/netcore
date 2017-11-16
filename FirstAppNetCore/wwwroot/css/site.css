@@ -41,3 +41,8 @@ input[type="checkbox"].input-validation-error {
     display: none;
 }
 
+.img-crop {
+    object-fit: cover;
+    padding: 3px;
+}
+
