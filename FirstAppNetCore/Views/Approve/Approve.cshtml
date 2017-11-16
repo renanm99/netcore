@@ -48,87 +48,88 @@
         {
             continue;
         }
-            <div class="col-xs-12 padding-30" style="background-color:#fff;border-bottom: solid 5px #777777">
-                <div class="col-xs-4" style="background-color:#fff;border-right: solid 1px black">
-                    <img src="@item.Img" style="width: 360px; height: 200px;">
-                    <h6>@item.Ratio</h6>
-                    <h3>@item.Title</h3>
-                    <h5> @Html.Raw(item.Description)</h5>
-                    <span class="date"><i class="ti-timer"></i>@item.PublishDate.ToString("dd") de @item.PublishDate.ToString("MMMMM, yyyy")</span>
+        <div class="col-xs-12 padding-30" style="background-color:#fff;border-bottom: solid 5px #777777">
+            <div class="col-xs-4" style="background-color:#fff;">
+                <img src="@item.Img" style="width: 360px; height: 200px;">
+                <h6>@item.Ratio</h6>
+                <h3>@item.Title</h3>
+                <h4>@item.Fonte</h4>
+                <h5> @Html.Raw(item.Description)</h5>
+                <span class="date"><i class="ti-timer"></i>@item.PublishDate.ToString("dd") de @item.PublishDate.ToString("MMMMM, yyyy")</span>
 
-                    <a href="@item.Link"><div>@item.Link</div></a>
-                    <h5>@item.Fonte</h5>
-                </div>
+                <a href="@item.Link"><div>@item.Link</div></a>
+                <h5>@item.Fonte</h5>
+            </div>
 
-                <div class="col-xs-6 padding-30" style="border: dashed 2px black">
-                    <h4>
-                        Seção:
-                        <select>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                        </select>
-                    </h4>
-                    <input type="checkbox"> Destaque <br>
-                    <input type="button" id="1-btnexe-@tt" class="btn" value="exemplo 1">
-                    <input type="button" id="2-btnexe-@tt" class="btn" value="exemplo 2"><br><br>
-                    <input type="button" class="btn btn-block" value="Aprovar">
-                </div>
-                <br><br>
+            <div class="col-xs-6 padding-30" style="border: dashed 2px black">
+                <h4>
+                    Seção:
+                    <select>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
+                </h4>
+                <input type="checkbox"> Destaque <br>
+                <input type="button" id="1-btnexe-@tt" class="btn" value="exemplo 1">
+                <input type="button" id="2-btnexe-@tt" class="btn" value="exemplo 2"><br><br>
+                <input type="button" id="btnapprove-@tt" class="btn btn-block" value="Aprovar" onclick="aprovar()">
+            </div>
+            <br><br>
 
 
-                <div class="col-xs-6" style="background-color:#fff">
-                    <div class="exemplo" id="1-ex-@tt">
-                        <div class="col-md-12 col-sm-12">
-                            <div class="post-carousel owl-carousel">
-                                <div class="featured-post" style="background-image: url(@item.Img);">
-                                    <div class="post-info">
-                                        <a href="#" class="cat-name tt-u">World</a>
-                                        <h3 style="text-shadow: 2px 2px #000000;" class="fw-6 fz-16"><a href="@item.Link" class="text-white">@item.Title</a></h3>
-                                    </div>
-                                </div>
-                                <div class="featured-post" style="background-image: url(@item.Img);">
-                                    <div class="post-info">
-                                        <a href="#" class="cat-name tt-u">World</a>
-                                        <h3 style="text-shadow: 2px 2px #000000;" class="fw-6 fz-16"><a href="#" class="text-white">@item.Title</a></h3>
-                                    </div>
+            <div class="col-xs-6" style="background-color:#fff">
+                <div class="exemplo" id="1-ex-@tt">
+                    <div class="col-md-10 col-sm-10">
+                        <div class="post-carousel owl-carousel">
+                            <div class="featured-post" style="background-image: url(@item.Img);">
+                                <div class="post-info">
+                                    <a href="#" class="cat-name tt-u">World</a>
+                                    <h3 style="text-shadow: 2px 2px #000000;" class="fw-6 fz-16"><a href="@item.Link" class="text-white">@item.Title</a></h3>
+
                                 </div>
                             </div>
-                            <!-- /.post-carousel -->
-                        </div>
-                    </div>
-
-                    <div class="exemplo" id="2-ex-@tt">
-                        <div class="grid-posts">
-                            <div class="col-xs-8 padding-10">
-                                <div class="grid-post">
-                                    <a href="#" class="mb-20"><img src="@item.Img" style="width: 360px; height: 200px;"></a>
-                                    <div class="post-info padding-15 ptb-20 bd-grey">
-                                        <h4 class="mb-15 fw-6"><a href="#" class="text-dark">@item.Title</a></h4>
-                                        <span class="date"><i class="ti-timer"></i>@item.PublishDate.ToString("dd") de @item.PublishDate.ToString("MMMM, yyyy")</span>
-                                    </div>
+                            <div class="featured-post" style="background-image: url(@item.Img);">
+                                <div class="post-info">
+                                    <a href="#" class="cat-name tt-u">World</a>
+                                    <h3 style="text-shadow: 2px 2px #000000;" class="fw-6 fz-16"><a href="#" class="text-white">@item.Title</a></h3>
                                 </div>
                             </div>
                         </div>
+                        <!-- /.post-carousel -->
                     </div>
+                </div>
 
+                <div class="exemplo" id="2-ex-@tt">
+                    <div class="grid-posts">
+                        <div class="col-xs-8 padding-10">
+                            <div class="grid-post">
+                                <a href="#" class="mb-20"><img src="@item.Img" style="width: 360px; height: 200px;"></a>
+                                <div class="post-info padding-15 ptb-20 bd-grey">
+                                    <h4 class="mb-15 fw-6"><a href="#" class="text-dark">@item.Title</a></h4>
+                                    <span class="date"><i class="ti-timer"></i>@item.PublishDate.ToString("dd") de @item.PublishDate.ToString("MMMM, yyyy")</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </div>
 
+        </div>
         <script>
-            $('#1-btnexe-@tt').mouseenter(function () {
-                $('#1-ex-@tt').css("display", "inline");
+            $('#btnapprove-@tt').click(function () {
             });
-            $('#1-btnexe-@tt').mouseout(function () {
-                $('#1-ex-@tt').css("display", "none");
+
+            $('#1-btnexe-@tt').click(function () {
+                $('#1-ex-@tt').toggle();
+                $('#2-btnexe-@tt').toggle();
             });
-            $('#2-btnexe-@tt').mouseenter(function () {
-                $('#2-ex-@tt').css("display", "inline");
-            });
-            $('#2-btnexe-@tt').mouseout(function () {
-                $('#2-ex-@tt').css("display", "none");
+
+            $('#2-btnexe-@tt').click(function () {
+                $('#2-ex-@tt').toggle();
+                $('#1-btnexe-@tt').toggle();
             });
         </script>
 

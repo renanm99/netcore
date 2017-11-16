@@ -12,12 +12,17 @@ namespace FirstAppNetCore.Controllers
 {
     public class ApproveController : Controller
     {
+
+        List<FeedModel> aprovadas = new List<FeedModel>();
+
         public async Task<IActionResult> Index()
         {
-            Program Connection = new Program();
-            string EndpointUrl = Connection.EndpointUrl;
-            string PrimaryKey = Connection.PrimaryKey;
-            DocumentClient client;
+            /*
+    Program Connection = new Program();
+    string EndpointUrl = Connection.EndpointUrl;
+    string PrimaryKey = Connection.PrimaryKey;
+    DocumentClient client;
+    */
 
             var articles = new List<FeedModel>();
 
@@ -106,10 +111,21 @@ namespace FirstAppNetCore.Controllers
                                 PublishDate = ParseDate(item.Elements().First(i => i.Name.LocalName == "pubDate").Value),
                                 Title = item.Elements().First(i => i.Name.LocalName == "title").Value
                             };
+                AprovarNoticia(feedItems);
             }
 
             return feedItems.ToList();
 
+        }
+
+        public void AprovarNoticia(IEnumerable<FeedModel> noticia)
+        {
+            foreach (var item in noticia)
+            {
+                if (item.Title == "")
+                {
+                }
+            }
         }
 
         private DateTime ParseDate(string date)
@@ -181,7 +197,7 @@ namespace FirstAppNetCore.Controllers
                     ratio = (Int32.Parse(width) * 1.0 / Int32.Parse(height));
                     if (ratio > 1.5)
                     {
-                        return "16:9 "+ratio;
+                        return "16:9 " + ratio;
                     }
                 }
 
@@ -202,7 +218,10 @@ namespace FirstAppNetCore.Controllers
             return false;
             */
             }
-            return "4:3 "+ ratio;
+            return "4:3 " + ratio;
         }
+
+
+
     }
 }
