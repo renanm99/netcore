@@ -28,10 +28,12 @@
     <link rel="stylesheet" href="css/meanmenu.css">
     <!-- Swipebox CSS -->
     <link rel="stylesheet" href="css/swipebox.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
     <!-- Theme CSS -->
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="~/css/site.css">
     <script src="js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
 
@@ -39,104 +41,207 @@
     .exemplo {
         display: none;
     }
+
+    .thumbs {
+        background-color: darkgrey;
+        width: 50px;
+        height: 50px;
+        border-radius: 20px;
+        padding-left: 5px;
+        padding-top: 2px;
+        transition: 0.5s;
+    }
+
+    .thumbsl:hover {
+        transition: 0.2s;
+        background-color: lightgrey;
+        position: relative;
+        color: green;
+    }
+
+    .thumbsd:hover {
+        transition: 0.2s;
+        background-color: lightgrey;
+        position: relative;
+        color: red;
+    }
+
+    .approveBox {
+        display: none;
+        background-color: green;
+        opacity: 0.8;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        font-size: 40px;
+        line-height: 300px;
+        text-align: center;
+        vertical-align: middle;
+        color: black;
+    }
+
+    .disapproveBox {
+        display: none;
+        background-color: red;
+        opacity: 0.8;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        font-size: 40px;
+        line-height: 300px;
+        text-align: center;
+        vertical-align: middle;
+        color: black;
+    }
 </style>
 
 @{ int tt = 0;
-    @foreach (var item in Model)
-    {
-        if (item.Img == "/img/single-post.jpg" || item.Img.Length > 250)
-        {
-            continue;
-        }
-        <div class="col-xs-12 padding-30" style="background-color:#fff;border-bottom: solid 5px #777777">
-            <div class="col-xs-4" style="background-color:#fff;">
-                <img src="@item.Img" style="width: 360px; height: 200px;">
-                <h6>@item.Ratio</h6>
-                <h3>@item.Title</h3>
-                <h4>@item.Fonte</h4>
-                <h5> @Html.Raw(item.Description)</h5>
-                <span class="date"><i class="ti-timer"></i>@item.PublishDate.ToString("dd") de @item.PublishDate.ToString("MMMMM, yyyy")</span>
-
-                <a href="@item.Link"><div>@item.Link</div></a>
-                <h5>@item.Fonte</h5>
-            </div>
-
-            <div class="col-xs-6 padding-30" style="border: dashed 2px black">
-                <h4>
-                    Seção:
-                    <select>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                    </select>
-                </h4>
-                <input type="checkbox"> Destaque <br>
-                <input type="button" id="1-btnexe-@tt" class="btn" value="exemplo 1">
-                <input type="button" id="2-btnexe-@tt" class="btn" value="exemplo 2"><br><br>
-                <input type="button" id="btnapprove-@tt" class="btn btn-block" value="Aprovar" onclick="aprovar()">
-            </div>
-            <br><br>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                @foreach (var item in Model)
+                {
+                    if (item.Img == "/img/single-post.jpg" || item.Img.Length > 250)
+                    {
+                        continue;
+                    }
 
 
-            <div class="col-xs-6" style="background-color:#fff">
-                <div class="exemplo" id="1-ex-@tt">
-                    <div class="col-md-10 col-sm-10">
-                        <div class="post-carousel owl-carousel">
-                            <div class="featured-post" style="background-image: url(@item.Img);">
-                                <div class="post-info">
-                                    <a href="#" class="cat-name tt-u">World</a>
-                                    <h3 style="text-shadow: 2px 2px #000000;" class="fw-6 fz-16"><a href="@item.Link" class="text-white">@item.Title</a></h3>
-
-                                </div>
-                            </div>
-                            <div class="featured-post" style="background-image: url(@item.Img);">
-                                <div class="post-info">
-                                    <a href="#" class="cat-name tt-u">World</a>
-                                    <h3 style="text-shadow: 2px 2px #000000;" class="fw-6 fz-16"><a href="#" class="text-white">@item.Title</a></h3>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /.post-carousel -->
-                    </div>
-                </div>
-
-                <div class="exemplo" id="2-ex-@tt">
-                    <div class="grid-posts">
-                        <div class="col-xs-8 padding-10">
-                            <div class="grid-post">
-                                <a href="#" class="mb-20"><img src="@item.Img" style="width: 360px; height: 200px;"></a>
+                    <div id="c-@tt" class="col-lg-4" style="margin-top:30px;">
+                        <div class="grid-posts">
+                            <div class="grid-post" style="position:relative">
+                                <div id="approve-@tt" class="approveBox">Approved</div>
+                                <div id="disapprove-@tt" class="disapproveBox">Disapproved</div>
+                                <a href="#" class="img-crop"><img id="img-@tt" src="@item.Img" style="width: 370px; height: 200px;"></a>
                                 <div class="post-info padding-15 ptb-20 bd-grey">
-                                    <h4 class="mb-15 fw-6"><a href="#" class="text-dark">@item.Title</a></h4>
-                                    <span class="date"><i class="ti-timer"></i>@item.PublishDate.ToString("dd") de @item.PublishDate.ToString("MMMM, yyyy")</span>
+                                    <h4 id="title-@tt" class="mb-15 fw-6"><a id="link-@tt" target="_blank" href="@item.Link" class="text-dark">@item.Title</a></h4>
+                                    <h6 id="description-@tt" class="text-dark">@Html.Raw(@item.Description)</h6>
+                                    <h6><a href="#" class="text-dark">@item.Fonte</a></h6>
+                                    <div style="display:none">
+                                        <span id="date-@tt" class="date"><i class="ti-timer"></i>@item.PublishDate.ToString("dd") de @item.PublishDate.ToString("MMMMM, yyyy")</span>
+                                    </div>
+                                    <div class="col-xs-offset-4">
+                                        <i id="thumbs-up-@tt" class="fa fa-thumbs-up fa-3x thumbs thumbsl"></i>
+                                        <i id="thumbs-down-@tt" class="fa fa-thumbs-down fa-3x thumbs thumbsd"></i>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+
+                    <script>
+                        $('#thumbs-up-@tt').click(function () {
+                            jsonObj = [];
+                            var title = $('#title-@tt').text();
+                            var description = $('#description-@tt').text();
+                            var link = $('#link-@tt').attr('href');
+                            var img = $('#img-@tt').attr('src');
+                            var date = $('#date-@tt').text();
+
+                            item = {}
+                            item["title"] = title;
+                            item["description"] = description;
+                            item["link"] = link;
+                            item["img"] = img;
+                            item["date"] = date;
+
+                            jsonObj.push(item);
+                            console.log(jsonObj);
+                            $('#approve-@tt').delay(100).fadeIn();
+                            $('#approve-@tt').delay(800).fadeOut();
+                            $('#c-@tt').delay(800).fadeOut();
+                        });
+                        $('#thumbs-down-@tt').click(function () {
+                            $('#disapprove-@tt').delay(100).fadeIn();
+                            $('#disapprove-@tt').delay(800).fadeOut();
+                            $('#c-@tt').delay(800).fadeOut();
+                        });
+                    </script>
+
+                    tt++;
+                    <!--
+                    <div class="col-xs-12 padding-30" style="background-color:#fff;border-bottom: solid 5px #777777">
+                        <div class="col-xs-4" style="background-color:#fff;">
+                            <img src="@item.Img" style="width: 360px; height: 200px;">
+                            <h6>@item.Ratio</h6>
+                            <h3>@item.Title</h3>
+                            <h4>@item.Fonte</h4>
+                            <h5> @Html.Raw(item.Description)</h5>
+                            <span class="date"><i class="ti-timer"></i>@item.PublishDate.ToString("dd") de @item.PublishDate.ToString("MMMMM, yyyy")</span>
+
+                            <a href="@item.Link"><div>@item.Link</div></a>
+                            <h5>@item.Fonte</h5>
+                        </div>
+
+                        <div class="col-xs-6 padding-30" style="border: dashed 2px black">
+                            <h4>
+                                Seção:
+                                <select>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                </select>
+                            </h4>
+                            <input type="checkbox"> Destaque <br>
+                            <input type="button" id="1-btnexe-@tt" class="btn" value="exemplo 1">
+                            <input type="button" id="2-btnexe-@tt" class="btn" value="exemplo 2"><br><br>
+                            <input type="button" id="btnapprove-@tt" class="btn btn-block" value="Aprovar" onclick="aprovar()">
+                        </div>
+                        <br><br>
+
+
+                        <div class="col-xs-6" style="background-color:#fff">
+                            <div class="exemplo" id="1-ex-@tt">
+                                <div class="col-md-10 col-sm-10">
+                                    <div class="post-carousel owl-carousel">
+                                        <div class="featured-post" style="background-image: url(@item.Img);">
+                                            <div class="post-info">
+                                                <a href="#" class="cat-name tt-u">World</a>
+                                                <h3 style="text-shadow: 2px 2px #000000;" class="fw-6 fz-16"><a href="@item.Link" class="text-white">@item.Title</a></h3>
+
+                                            </div>
+                                        </div>
+                                        <div class="featured-post" style="background-image: url(@item.Img);">
+                                            <div class="post-info">
+                                                <a href="#" class="cat-name tt-u">World</a>
+                                                <h3 style="text-shadow: 2px 2px #000000;" class="fw-6 fz-16"><a href="#" class="text-white">@item.Title</a></h3>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="exemplo" id="2-ex-@tt">
+                                <div class="grid-posts">
+                                    <div class="col-xs-8 padding-10">
+                                        <div class="grid-post">
+                                            <a href="#" class="mb-20"><img src="@item.Img" style="width: 360px; height: 200px;"></a>
+                                            <div class="post-info padding-15 ptb-20 bd-grey">
+                                                <h4 class="mb-15 fw-6"><a href="#" class="text-dark">@item.Title</a></h4>
+                                                <span class="date"><i class="ti-timer"></i>@item.PublishDate.ToString("dd") de @item.PublishDate.ToString("MMMM, yyyy")</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                        -->
+                }
 
             </div>
 
         </div>
-        <script>
-            $('#btnapprove-@tt').click(function () {
-            });
 
-            $('#1-btnexe-@tt').click(function () {
-                $('#1-ex-@tt').toggle();
-                $('#2-btnexe-@tt').toggle();
-            });
-
-            $('#2-btnexe-@tt').click(function () {
-                $('#2-ex-@tt').toggle();
-                $('#1-btnexe-@tt').toggle();
-            });
-        </script>
-
-        tt++;
-    }
+    </div>
 
 }
+
+
 
 
 
