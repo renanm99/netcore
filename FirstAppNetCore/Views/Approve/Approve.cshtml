@@ -28,7 +28,7 @@
     <link rel="stylesheet" href="css/meanmenu.css">
     <!-- Swipebox CSS -->
     <link rel="stylesheet" href="css/swipebox.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- Theme CSS -->
     <link rel="stylesheet" href="css/main.css">
@@ -38,10 +38,6 @@
 </head>
 
 <style>
-    .exemplo {
-        display: none;
-    }
-
     .thumbs {
         background-color: darkgrey;
         width: 50px;
@@ -50,6 +46,7 @@
         padding-left: 5px;
         padding-top: 2px;
         transition: 0.5s;
+        display: inline-block;
     }
 
     .thumbsl:hover {
@@ -96,6 +93,11 @@
 </style>
 
 @{ int tt = 0;
+
+    <script>
+        var jsonNews = [];
+    </script>
+
     <div class="container">
         <div class="row">
             <div class="col-xs-12">
@@ -118,7 +120,7 @@
                                     <h6 id="description-@tt" class="text-dark">@Html.Raw(@item.Description)</h6>
                                     <h6><a href="#" class="text-dark">@item.Fonte</a></h6>
                                     <div style="display:none">
-                                        <span id="date-@tt" class="date"><i class="ti-timer"></i>@item.PublishDate.ToString("dd") de @item.PublishDate.ToString("MMMMM, yyyy")</span>
+                                        <span id="date-@tt" class="date"><i class="ti-timer"></i>@item.PublishDate.ToString("MMMMM") @item.PublishDate.ToString("dd"), @item.PublishDate.ToString("yyyy")</span>
                                     </div>
                                     <div class="col-xs-offset-4">
                                         <i id="thumbs-up-@tt" class="fa fa-thumbs-up fa-3x thumbs thumbsl"></i>
@@ -128,10 +130,9 @@
                             </div>
                         </div>
                     </div>
-
                     <script>
+
                         $('#thumbs-up-@tt').click(function () {
-                            jsonObj = [];
                             var title = $('#title-@tt').text();
                             var description = $('#description-@tt').text();
                             var link = $('#link-@tt').attr('href');
@@ -145,8 +146,7 @@
                             item["img"] = img;
                             item["date"] = date;
 
-                            jsonObj.push(item);
-                            console.log(jsonObj);
+                            jsonNews.push(item);
                             $('#approve-@tt').delay(100).fadeIn();
                             $('#approve-@tt').delay(800).fadeOut();
                             $('#c-@tt').delay(800).fadeOut();
@@ -156,6 +156,18 @@
                             $('#disapprove-@tt').delay(800).fadeOut();
                             $('#c-@tt').delay(800).fadeOut();
                         });
+
+                        function save() {
+                            $.ajax({
+                                url: "@Url.Action("SaveNews")",
+                                type: "POST",
+                                data: jsonNews,
+                                contentType: "application/json",
+                                success: function (result) {
+                                    console.log(result, jsonNews);
+                                }
+                            });
+                        }
                     </script>
 
                     tt++;
@@ -166,8 +178,8 @@
                             <h6>@item.Ratio</h6>
                             <h3>@item.Title</h3>
                             <h4>@item.Fonte</h4>
-                            <h5> @Html.Raw(item.Description)</h5>
-                            <span class="date"><i class="ti-timer"></i>@item.PublishDate.ToString("dd") de @item.PublishDate.ToString("MMMMM, yyyy")</span>
+                            <h5> @Html.Raw(item.Description)</h5> November 16 , 2017
+                            <span class="date"><i class="ti-timer"></i>@item.PublishDate.ToString("MMMMM") @item.PublishDate.ToString("dd"), @item.PublishDate.ToString("yyyy")</span>
 
                             <a href="@item.Link"><div>@item.Link</div></a>
                             <h5>@item.Fonte</h5>
@@ -229,15 +241,18 @@
 
                         </div>
 
-                    </div>
-                        -->
+                    </div>     -->
                 }
 
             </div>
 
+
+
         </div>
 
     </div>
+
+    <button id="btnSave" class="col-xs-offset-3 btn btn-block btn-success" onclick="save()" style="width:50%;height:80px;margin-top:50px;">Save News</button>
 
 }
 

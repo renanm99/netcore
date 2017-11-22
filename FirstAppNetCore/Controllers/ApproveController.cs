@@ -10,10 +10,23 @@ using Microsoft.Azure.Documents.Client;
 
 namespace FirstAppNetCore.Controllers
 {
+    public class NewsModel
+    {
+        public string title { get; set; }
+        public string description { get; set; }
+        public string link { get; set; }
+        public string img { get; set; }
+        public string date { get; set; }
+    }
+
     public class ApproveController : Controller
     {
 
-        List<FeedModel> aprovadas = new List<FeedModel>();
+        [HttpPost]
+        public ActionResult SaveNews(List<NewsModel> model)
+        {
+            return null;
+        }
 
         public async Task<IActionResult> Index()
         {
