@@ -215,24 +215,24 @@
 
             <div class="main-content mt-20 ov-hidden">
                 <div class="col-md-8 sm-padding">
-                    <div class="news-block padding-15 bg-white bd-grey mb-40">
+                    <div class="news-block padding-20 bg-white bd-grey mb-40">
                         <h2 class="block-heading mb-40">Trending News</h2>
                         <div class="grid-posts">
                             @{ processed = 0;
                                 foreach (var item in Model)
                                 {
+                                    if (item.Img == "/img/single-post.jpg" || item.Img.Length > 250)
+                                    {
+                                        continue;
+                                    }
                                     if (processed >= 4)
                                     {
-                                        if (item.Img == "/img/single-post.jpg" || item.Img.Length > 250)
-                                        {
-                                            continue;
-                                        }
                                         <div class="col-xs-6 padding-10">
                                             <div class="grid-post">
                                                 <a href="#" class="mb-20"><img src="@item.Img" style="width: 360px; height: 200px;"></a>
-                                                <div class="post-info padding-15 ptb-20 bd-grey">
+                                                <div class="post-info padding-20 ptb-20 bd-grey">
                                                     <h4 class="mb-15 fw-6"><a href="#" class="text-dark">@item.Title</a></h4>
-                                                    <span class="date"><i class="ti-timer"></i>@item.PublishDate.ToString("dd") de @item.PublishDate.ToString("MMMMM, yyyy")</span>
+                                                    <span class="date"><i class="ti-timer"></i>@item.PublishDate.ToString("MMMMM dd, yyyy")</span>
                                                 </div>
                                             </div>
                                         </div>
