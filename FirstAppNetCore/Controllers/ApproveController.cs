@@ -15,11 +15,42 @@ namespace FirstAppNetCore.Controllers
     {
 
         [HttpPost]
-        public ActionResult SaveNews(List<NewsModel> model)
+        public async Task<ActionResult> SaveNews([FromBody]List<NewsModel> model)
         {
+            Program Connection = new Program();
+            string EndpointUrl = Connection.EndpointUrl;
+            string PrimaryKey = Connection.PrimaryKey;
+            DocumentClient client;
+
+            using (client = new DocumentClient(new Uri(EndpointUrl), PrimaryKey))
+            {
+                try
+                {
+                    foreach (var item in model)
+                    {
+                        await client.CreateDocumentAsync(
+                        UriFactory.CreateDocumentCollectionUri("Teste", "CTeste"),
+                        new NewsModel
+                        {
+                            Title = item.Title,
+                            Description = item.Description,
+                            Link = item.Link,
+                            Img = item.Img,
+                            PublishDate = item.PublishDate
+                        }
+                        );
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Error: {0}", e.Message);
+                }
+            }
+
             return Json(model);
         }
 
+        
         public async Task<IActionResult> Index()
         {
             /*
@@ -76,20 +107,42 @@ namespace FirstAppNetCore.Controllers
 
 
 
-            //Bloco para ler do banco (bloco seprado)
-            /*
-            using (client = new DocumentClient(new Uri(EndpointUrl), PrimaryKey))
-            {
-                IQueryable<FeedModel> queryable =
-                client.CreateDocumentQuery<FeedModel>(UriFactory.CreateDocumentCollectionUri("Teste", "CTeste"));
-                List<FeedModel> posts = queryable.ToList();
-                posts.RemoveRange(20, posts.Count - 20);
+        //Bloco para ler do banco (bloco seprado)
+        /*
+        using (client = new DocumentClient(new Uri(EndpointUrl), PrimaryKey))
+        {
+            IQueryable<FeedModel> queryable =
+            client.CreateDocumentQuery<FeedModel>(UriFactory.CreateDocumentCollectionUri("Teste", "CTeste"));
+            List<FeedModel> posts = queryable.ToList();
+            posts.RemoveRange(20, posts.Count - 20);
 
-                return View("Index", posts.OrderBy(o => o.PublishDate));
-            }
+            return View("Index", posts.OrderBy(o => o.PublishDate));
+        }
+
             */
 
+    }
+
+
+            /*
+        public async Task<IActionResult> Index()
+        {
+            Program Connection = new Program();
+            string EndpointUrl = Connection.EndpointUrl;
+            string PrimaryKey = Connection.PrimaryKey;
+            DocumentClient client;
+
+            using (client = new DocumentClient(new Uri(EndpointUrl), PrimaryKey))
+            {
+                IQueryable<NewsModel> queryable =
+                client.CreateDocumentQuery<NewsModel>(UriFactory.CreateDocumentCollectionUri("Teste", "CTeste"));
+                List<NewsModel> posts = queryable.ToList();
+                posts.RemoveRange(0, 180);
+
+                return View("Approve", posts.OrderByDescending(o => o.PublishDate));
+            }
         }
+        */
 
         public async Task<IEnumerable<FeedModel>> GetFeed(string feedUrl)
         {
@@ -116,21 +169,10 @@ namespace FirstAppNetCore.Controllers
                                 PublishDate = ParseDate(item.Elements().First(i => i.Name.LocalName == "pubDate").Value),
                                 Title = item.Elements().First(i => i.Name.LocalName == "title").Value
                             };
-                AprovarNoticia(feedItems);
             }
 
             return feedItems.ToList();
 
-        }
-
-        public void AprovarNoticia(IEnumerable<FeedModel> noticia)
-        {
-            foreach (var item in noticia)
-            {
-                if (item.Title == "")
-                {
-                }
-            }
         }
 
         private DateTime ParseDate(string date)

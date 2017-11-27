@@ -7,10 +7,11 @@ namespace FirstAppNetCore.Models
 {
     public class NewsModel
     {
-        public string title { get; set; }
-        public string description { get; set; }
-        public string link { get; set; }
-        public string img { get; set; }
-        public string date { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public string Link { get; set; }
+        public string Img { get; set; }
+        public string PublishDate { get; set; }
     }
+
 }

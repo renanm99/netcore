@@ -1,4 +1,4 @@
-﻿@model IEnumerable<FirstAppNetCore.Models.FeedModel>
+﻿@model IEnumerable<FirstAppNetCore.Models.NewsModel>
 
 @{
     ViewData["Title"] = "Home Page";
@@ -87,11 +87,6 @@
                         }
                         if (processed == 1)
                         {
-                            if (item.Ratio != "4:3")
-                            {
-                                processed = 1;
-                                continue;
-                            }
                             <div class="col-md-3 col-sm-6">
                                 <div class="post-carousel owl-carousel">
                                     <div class="featured-post" style="background-image: url(@item.Img);">
@@ -184,11 +179,6 @@
                             }
                             else if (processed == 1)
                             {
-                                if (item.Ratio != "4:3")
-                                {
-                                    processed = 1;
-                                    continue;
-                                }
                                 <li><a href="@item.Link">@item.Title</a></li>
                             }
                             else if (processed == 2)
@@ -232,7 +222,7 @@
                                                 <a href="#" class="mb-20"><img src="@item.Img" style="width: 360px; height: 200px;"></a>
                                                 <div class="post-info padding-20 ptb-20 bd-grey">
                                                     <h4 class="mb-15 fw-6"><a href="#" class="text-dark">@item.Title</a></h4>
-                                                    <span class="date"><i class="ti-timer"></i>@item.PublishDate.ToString("MMMMM dd, yyyy")</span>
+                                                    <span class="date"><i class="ti-timer"></i>@item.PublishDate</span>
                                                 </div>
                                             </div>
                                         </div>

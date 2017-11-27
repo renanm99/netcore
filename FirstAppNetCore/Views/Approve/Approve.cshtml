@@ -46,7 +46,7 @@
         border-radius: 20px;
         padding-left: 5px;
         padding-top: 2px;
-        transition: 0.5s;
+        transition: 0.3s;
         display: inline-block;
     }
 
@@ -107,18 +107,18 @@
                     continue;
                 }
 
-                <div id="c-@tt" class="col-xs-12 col-sm-6 col-md-4 col-lg-4" style="margin-top:30px;">
+                <div id="c-@tt" class="col-xs-12 col-sm-6 col-md-4 col-lg-4" style="margin-top:30px;float:left;">
                     <div class="grid-posts">
-                        <div class="grid-post" style="position:relative">
+                        <div class="grid-post" style="position:relative;float:left;">
                             <div id="approve-@tt" class="approveBox">Approved</div>
                             <div id="disapprove-@tt" class="disapproveBox">Disapproved</div>
-                            <a href="#" class="img-crop"><img id="img-@tt" src="@item.Img" style="width: 100%; height: 200px;"></a>
+                            <a href="#" class="img-crop"><img id="img-@tt" src="@item.Img" style="float:left;width: 100%; height: 200px;"></a>
                             <div class="post-info padding-15 ptb-20 bd-grey">
                                 <h4 id="title-@tt" class="mb-15 fw-6"><a id="link-@tt" target="_blank" href="@item.Link" class="text-dark">@item.Title</a></h4>
                                 <h6 id="description-@tt" class="text-dark">@Html.Raw(item.Description)</h6>
-                                <h6><a href="#" class="text-dark">@item.Fonte</a></h6>
+                                <h6 class="text-dark">@item.Fonte</h6>
                                 <div style="display:none">
-                                    <span id="date-@tt" class="date"><i class="ti-timer"></i>@item.PublishDate.ToString("MMMMM dd, yyyy")</span>
+                                    <span id="date-@tt" class="date"><i class="ti-timer"></i>@item.PublishDate</span>
                                 </div>
                                 <div class="col-xs-offset-4">
                                     <i id="thumbs-up-@tt" class="fa fa-thumbs-up fa-3x thumbs thumbsl"></i>
@@ -128,20 +128,21 @@
                         </div>
                     </div>
                 </div>
+
                 <script>
                     $('#thumbs-up-@tt').click(function () {
                         var title = $('#title-@tt').text();
                         var description = $('#description-@tt').text();
                         var link = $('#link-@tt').attr('href');
                         var img = $('#img-@tt').attr('src');
-                        var date = $('#date-@tt').text();
+                        var publishdate = $('#date-@tt').text();
 
                         item = {}
                         item["title"] = title;
                         item["description"] = description;
                         item["link"] = link;
                         item["img"] = img;
-                        item["date"] = date;
+                        item["publishdate"] = publishdate;
 
                         jsonNews.push(item);
 
@@ -156,7 +157,6 @@
                     });
 
                     function save() {
-
                         $.ajax({
                             url: '/approve/savenews',
                             type: 'POST',
@@ -174,6 +174,6 @@
             }
         </div>
     </div>
-    <button id="btnSave" class="col-xs-offset-3 btn btn-block btn-success" onclick="save()" style="width:50%;height:80px;margin-top:50px;">Save News</button>
 
+    <button id="btnSave" class="col-xs-offset-3 btn btn-block btn-success" onclick="save()" style="width:50%;height:80px;margin-top:50px;">Save News</button>
 }
