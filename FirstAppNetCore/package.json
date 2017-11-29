@@ -1,0 +1,23 @@
+{
+  "name": "FirstAppNetCore",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CrazyTechLabs/iot-newspaper-engine.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CrazyTechLabs/iot-newspaper-engine/issues"
+  },
+  "homepage": "https://github.com/CrazyTechLabs/iot-newspaper-engine#readme",
+  "dependencies": {
+    "readmore-js": "^2.1.0"
+  }
+}
