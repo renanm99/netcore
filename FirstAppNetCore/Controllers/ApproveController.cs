@@ -50,22 +50,38 @@ namespace FirstAppNetCore.Controllers
             return Json(model);
         }
 
-        
-        public async Task<IActionResult> Index()
+
+        public async Task<IActionResult> Index(ApproveController ia)
         {
-            /*
-    Program Connection = new Program();
-    string EndpointUrl = Connection.EndpointUrl;
-    string PrimaryKey = Connection.PrimaryKey;
-    DocumentClient client;
-    */
+
+            Program Connection = new Program();
+            string EndpointUrl = Connection.EndpointUrl;
+            string PrimaryKey = Connection.PrimaryKey;
+            DocumentClient client;
+
+
 
             var articles = new List<FeedModel>();
 
             articles.AddRange(await GetFeed("https://blogs.microsoft.com/iot/feed/"));
             articles.AddRange(await GetFeed("https://staceyoniot.com/feed/"));
 
-            return View("Approve", articles.OrderByDescending((o => o.PublishDate)));
+            //return View("Approve", ia.o.OrderByDescending((o => o.PublishDate)));
+
+
+            using (client = new DocumentClient(new Uri(EndpointUrl), PrimaryKey))
+            {
+                IQueryable<FeedModel> queryable =
+                client.CreateDocumentQuery<FeedModel>(UriFactory.CreateDocumentCollectionUri("Teste", "CTeste"));
+                List<FeedModel> posts = queryable.ToList();
+                posts.RemoveRange(0, 180);
+
+                foreach (var i in posts) {
+                    articles.RemoveAll(article => article.Title == i.Title);
+                }
+
+                return View("Approve", articles.OrderBy(o => o.PublishDate));
+            }
 
             //Bloco para gravar no banco
             /*
@@ -107,42 +123,42 @@ namespace FirstAppNetCore.Controllers
 
 
 
-        //Bloco para ler do banco (bloco seprado)
-        /*
-        using (client = new DocumentClient(new Uri(EndpointUrl), PrimaryKey))
-        {
-            IQueryable<FeedModel> queryable =
-            client.CreateDocumentQuery<FeedModel>(UriFactory.CreateDocumentCollectionUri("Teste", "CTeste"));
-            List<FeedModel> posts = queryable.ToList();
-            posts.RemoveRange(20, posts.Count - 20);
-
-            return View("Index", posts.OrderBy(o => o.PublishDate));
-        }
-
-            */
-
-    }
-
-
+            //Bloco para ler do banco (bloco seprado)
             /*
-        public async Task<IActionResult> Index()
-        {
-            Program Connection = new Program();
-            string EndpointUrl = Connection.EndpointUrl;
-            string PrimaryKey = Connection.PrimaryKey;
-            DocumentClient client;
-
             using (client = new DocumentClient(new Uri(EndpointUrl), PrimaryKey))
             {
-                IQueryable<NewsModel> queryable =
-                client.CreateDocumentQuery<NewsModel>(UriFactory.CreateDocumentCollectionUri("Teste", "CTeste"));
-                List<NewsModel> posts = queryable.ToList();
-                posts.RemoveRange(0, 180);
+                IQueryable<FeedModel> queryable =
+                client.CreateDocumentQuery<FeedModel>(UriFactory.CreateDocumentCollectionUri("Teste", "CTeste"));
+                List<FeedModel> posts = queryable.ToList();
+                posts.RemoveRange(20, posts.Count - 20);
 
-                return View("Approve", posts.OrderByDescending(o => o.PublishDate));
+                return View("Index", posts.OrderBy(o => o.PublishDate));
             }
+
+                */
+
         }
-        */
+
+
+        /*
+    public async Task<IActionResult> Index()
+    {
+        Program Connection = new Program();
+        string EndpointUrl = Connection.EndpointUrl;
+        string PrimaryKey = Connection.PrimaryKey;
+        DocumentClient client;
+
+        using (client = new DocumentClient(new Uri(EndpointUrl), PrimaryKey))
+        {
+            IQueryable<NewsModel> queryable =
+            client.CreateDocumentQuery<NewsModel>(UriFactory.CreateDocumentCollectionUri("Teste", "CTeste"));
+            List<NewsModel> posts = queryable.ToList();
+            posts.RemoveRange(0, 180);
+
+            return View("Approve", posts.OrderByDescending(o => o.PublishDate));
+        }
+    }
+    */
 
         public async Task<IEnumerable<FeedModel>> GetFeed(string feedUrl)
         {
@@ -160,12 +176,10 @@ namespace FirstAppNetCore.Controllers
                 feedItems = from item in doc.Root.Descendants().First(i => i.Name.LocalName == "channel").Elements().Where(i => i.Name.LocalName == "item")
                             select new FeedModel
                             {
-                                Content = (item.DescendantNodes().OfType<XCData>().Last().Value),
                                 Description = item.Elements().First(i => i.Name.LocalName == "description").Value,
                                 Link = item.Elements().First(i => i.Name.LocalName == "link").Value,
-                                Fonte = doc.Root.Descendants().Elements().First(i => i.Name.LocalName == "title").Value,
+                                //Fonte = doc.Root.Descendants().Elements().First(i => i.Name.LocalName == "title").Value,
                                 Img = ImgUrl(item.DescendantNodes().OfType<XCData>().Last().Value),
-                                Ratio = ratio(item.DescendantNodes().OfType<XCData>().Last().Value),
                                 PublishDate = ParseDate(item.Elements().First(i => i.Name.LocalName == "pubDate").Value),
                                 Title = item.Elements().First(i => i.Name.LocalName == "title").Value
                             };

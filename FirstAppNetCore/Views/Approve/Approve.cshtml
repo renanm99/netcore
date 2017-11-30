@@ -101,6 +101,9 @@
         <div class="row">
             @foreach (var item in Model)
             {
+                if (item.Img == "/img/single-post.jpg" || item.Img.Length > 200) {
+                    continue;
+                 }
 
                 <div id="c-@tt" class="col-xs-12 col-sm-6 col-md-4 col-lg-4" style="margin-top:30px;float:left;">
                     <div class="grid-posts" style="margin-bottom:-80px">
@@ -111,7 +114,7 @@
                             <div id="a-@tt" class="post-info padding-15 ptb-20 bd-grey">
                                 <h4 id="title-@tt" class="mb-15 fw-6"><a id="link-@tt" target="_blank" href="@item.Link" class="text-dark">@item.Title</a></h4>
                                 <h6 id="description-@tt" class="text-dark">@Html.Raw(item.Description)</h6>
-                                <h6 class="text-dark">@item.Fonte</h6>
+                                <!--<h6 class="text-dark">item.Fonte</h6>-->
                                 <span style="display:none" id="date-@tt" class="date"><i class="ti-timer"></i>@item.PublishDate</span>
                             </div>
                             <div class="col-xs-offset-4">

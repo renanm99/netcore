@@ -30,7 +30,6 @@ namespace FirstAppNetCore.Controllers
                 client.CreateDocumentQuery<NewsModel>(UriFactory.CreateDocumentCollectionUri("Teste", "CTeste"));
                 List<NewsModel> posts = queryable.ToList();
                 posts.RemoveRange(0, 180);
-
                 return View("Index", posts.OrderByDescending(o => o.PublishDate));
             }
         }
@@ -82,7 +81,7 @@ namespace FirstAppNetCore.Controllers
                     Console.WriteLine("Error: {0}", e.Message);
                 }
             }
-                
+
 
             return View("Index", articles.OrderByDescending(o => o.PublishDate));
 
@@ -99,7 +98,7 @@ namespace FirstAppNetCore.Controllers
 
                 return View("Index", posts.OrderBy(o => o.PublishDate));
             }
-            
+
 
         }
     */
