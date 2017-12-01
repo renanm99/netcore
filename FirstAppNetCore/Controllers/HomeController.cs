@@ -30,6 +30,9 @@ namespace FirstAppNetCore.Controllers
                 client.CreateDocumentQuery<NewsModel>(UriFactory.CreateDocumentCollectionUri("Teste", "CTeste"));
                 List<NewsModel> posts = queryable.ToList();
                 posts.RemoveRange(0, 180);
+
+                posts.RemoveAll(post => post.Status == false);
+
                 return View("Index", posts.OrderByDescending(o => o.PublishDate));
             }
         }
@@ -103,35 +106,6 @@ namespace FirstAppNetCore.Controllers
         }
     */
 
-        public async Task<IEnumerable<FeedModel>> GetFeed(string feedUrl)
-        {
-            IEnumerable<FeedModel> feedItems;
-            //var feedUrl = "https://staceyoniot.com/feed/";
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(feedUrl);
-                var responseMessage = await client.GetAsync(feedUrl);
-                var responseString = await responseMessage.Content.ReadAsStringAsync();
-
-                //extract feed items
-                XDocument doc = XDocument.Parse(responseString);
-
-                feedItems = from item in doc.Root.Descendants().First(i => i.Name.LocalName == "channel").Elements().Where(i => i.Name.LocalName == "item")
-                            select new FeedModel
-                            {
-                                Content = (item.DescendantNodes().OfType<XCData>().Last().Value),
-                                Link = item.Elements().First(i => i.Name.LocalName == "link").Value,
-                                Img = ImgUrl(item.DescendantNodes().OfType<XCData>().Last().Value),
-                                PublishDate = ParseDate(item.Elements().First(i => i.Name.LocalName == "pubDate").Value),
-                                Ratio = ratio(item.DescendantNodes().OfType<XCData>().Last().Value),
-                                Title = item.Elements().First(i => i.Name.LocalName == "title").Value
-                            };
-            }
-
-            return feedItems.ToList();
-
-        }
-
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
@@ -149,98 +123,6 @@ namespace FirstAppNetCore.Controllers
         public IActionResult Error()
         {
             return View();
-        }
-
-        private DateTime ParseDate(string date)
-        {
-            DateTime result;
-            if (DateTime.TryParse(date, out result))
-                return result;
-            else
-                return DateTime.MinValue;
-        }
-
-        private string Conteudo(string content)
-        {
-            if (content.IndexOf("<") >= 0)
-            {
-                content = content.Remove(0, content.LastIndexOf("e>") + 2);
-                return content;
-            }
-            return content;
-        }
-
-        private string ImgUrl(string url)
-        {
-            if (url.IndexOf("src=") > 0)
-            {
-                int a = url.IndexOf("src=\"") + 5;
-                int b = url.IndexOf("alt=") - 2;
-                url = url.Substring(a, b - a);
-
-                if (url.Equals("https://mscorpmedia.azureedge.net/mscorpmedia/2018/03/ioytCTA_v4.png"))
-                {
-                    return "/img/single-post.jpg";
-                }
-
-                return url;
-            }
-            return "/img/single-post.jpg";
-        }
-
-        private string ratio(string url)
-        {
-            string aspect = url;
-            string width = "";
-            string height = "";
-            double ratio = 0;
-            if (url.IndexOf("src=") > 0)
-            {
-                int a = url.IndexOf("src=\"") + 5;
-                int b = url.IndexOf("alt=") - 2;
-                url = url.Substring(a, b - a);
-
-                a = aspect.IndexOf("width=");
-                b = aspect.IndexOf("height=") + 13;
-                aspect = aspect.Substring(a, b - a);
-                aspect = aspect.Replace("'", "");
-                aspect = aspect.Replace("\"", "");
-
-                width = (aspect.Substring(aspect.IndexOf("=") + 1, aspect.IndexOf("h"))).ToString();
-                width = width.Replace("h", "");
-                width = width.Replace(" ", "");
-                width = width.Replace("e", "");
-                height = (aspect.Substring(aspect.LastIndexOf("=") + 1, aspect.Length - aspect.LastIndexOf("=") - 1)).ToString();
-                height = height.Replace(" ", "");
-                height = height.Replace("/", "");
-
-                if (Int32.Parse(width) > 0 && Int32.Parse(height) > 0)
-                {
-                    ratio = (Int32.Parse(width) * 1.0 / Int32.Parse(height));
-                    if (ratio > 1.5)
-                    {
-                        return "16:9";
-                    }
-                }
-
-                /*
-                if (Int32.Parse(width) > 0 && Int32.Parse(height) > 0)
-                {
-                    ratio = (Int32.Parse(width) * 1.0 / Int32.Parse(height));
-                    if (ratio > 1.4 && ratio < 2.2)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-            }
-            return false;
-            */
-            }
-            return "4:3";
         }
 
     }

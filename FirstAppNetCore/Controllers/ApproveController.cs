@@ -36,7 +36,8 @@ namespace FirstAppNetCore.Controllers
                             Description = item.Description,
                             Link = item.Link,
                             Img = item.Img,
-                            PublishDate = item.PublishDate
+                            PublishDate = item.PublishDate,
+                            Status = item.Status
                         }
                         );
                     }
@@ -65,8 +66,6 @@ namespace FirstAppNetCore.Controllers
 
             articles.AddRange(await GetFeed("https://blogs.microsoft.com/iot/feed/"));
             articles.AddRange(await GetFeed("https://staceyoniot.com/feed/"));
-
-            //return View("Approve", ia.o.OrderByDescending((o => o.PublishDate)));
 
 
             using (client = new DocumentClient(new Uri(EndpointUrl), PrimaryKey))

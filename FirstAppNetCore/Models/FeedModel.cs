@@ -15,6 +15,7 @@ namespace FirstAppNetCore.Models
         public string Img { get; set; }
         public string Ratio { get; set; }
         public DateTime PublishDate { get; set; }
+        public bool Status { get; set; }
 
         public FeedModel()
         {

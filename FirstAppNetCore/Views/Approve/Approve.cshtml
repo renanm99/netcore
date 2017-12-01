@@ -101,31 +101,48 @@
         <div class="row">
             @foreach (var item in Model)
             {
-                if (item.Img == "/img/single-post.jpg" || item.Img.Length > 200) {
-                    continue;
-                 }
 
                 <div id="c-@tt" class="col-xs-12 col-sm-6 col-md-4 col-lg-4" style="margin-top:30px;float:left;">
-                    <div class="grid-posts" style="margin-bottom:-80px">
-                        <div class="grid-post" style="position:relative;float:left;">
-                            <div id="approve-@tt" class="approveBox">Approved</div>
-                            <div id="disapprove-@tt" class="disapproveBox">Disapproved</div>
-                            <a href="#" class="img-crop"><img id="img-@tt" src="@item.Img" style="float:left;width: 100%; height: 200px;"></a>
-                            <div id="a-@tt" class="post-info padding-15 ptb-20 bd-grey">
-                                <h4 id="title-@tt" class="mb-15 fw-6"><a id="link-@tt" target="_blank" href="@item.Link" class="text-dark">@item.Title</a></h4>
-                                <h6 id="description-@tt" class="text-dark">@Html.Raw(item.Description)</h6>
-                                <!--<h6 class="text-dark">item.Fonte</h6>-->
-                                <span style="display:none" id="date-@tt" class="date"><i class="ti-timer"></i>@item.PublishDate</span>
+                    <div class="grid-posts">
+                        <div style="margin-bottom:10px;box-shadow: 10px 10px 5px #888888;">
+                            <div class="grid-post">
+                                <div id="approve-@tt" class="approveBox">Approved</div>
+                                <div id="disapprove-@tt" class="disapproveBox">Disapproved</div>
+                                <a href="#" class="img-crop"><img id="img-@tt" src="@item.Img" style="margin-top:-30px;float:left;width: 100%; height: 200px;"></a>
+                                <div id="a-@tt" class="post-info padding-15 ptb-20 bd-grey">
+                                    <h4 id="title-@tt" class="mb-15 fw-6"><a id="link-@tt" target="_blank" href="@item.Link" class="text-dark">@item.Title</a></h4>
+                                    <h6 id="description-@tt" class="text-dark">@Html.Raw(item.Description)</h6>
+                                    <!--<h6 class="text-dark">item.Fonte</h6>-->
+                                    <span style="display:none" id="date-@tt" class="date"><i class="ti-timer"></i>@item.PublishDate</span>
+                                </div>
                             </div>
-                            <div class="col-xs-offset-4">
-                                <a id="thumbs-up-@tt" href="javascript:;"><img class="thumbsl" style="margin-right:5px;background-color: darkgrey;width: 50px;height: 50px;border-radius: 18px;padding: 5px;transition: 0.3s;display: inline-block;" src="~/images/thumb-up.png" /></a>
-                                <a id="thumbs-down-@tt" href="javascript:;"><img class="thumbsd" style="margin-left:5px;background-color: darkgrey;width: 50px;height: 50px;border-radius: 18px;padding: 5px;transition: 0.3s;display: inline-block;" src="~/images/thumb-down.png" /></a>
-                            </div>
+                        </div>
+                        <div class="col-xs-offset-4">
+                            <a id="thumbs-up-@tt" href="javascript:;"><img class="thumbsl" style="margin-right:5px;background-color: darkgrey;width: 50px;height: 50px;border-radius: 18px;padding: 5px;transition: 0.3s;display: inline-block;" src="~/images/thumb-up.png" /></a>
+                            <a id="thumbs-down-@tt" href="javascript:;"><img class="thumbsd" style="margin-left:5px;background-color: darkgrey;width: 50px;height: 50px;border-radius: 18px;padding: 5px;transition: 0.3s;display: inline-block;" src="~/images/thumb-down.png" /></a>
                         </div>
                     </div>
                 </div>
 
                 <script>
+
+                    $('#thumbs-up-@tt > img').mouseenter(function () {
+                        $('#thumbs-up-@tt > img').attr('src','/images/thumb-up-green.png');
+                    });
+
+                    $('#thumbs-up-@tt > img').mouseout(function () {
+                        $('#thumbs-up-@tt > img').attr('src','/images/thumb-up.png');
+                    });
+
+                    $('#thumbs-down-@tt > img').mouseenter(function () {
+                        $('#thumbs-down-@tt > img').attr('src','/images/thumb-down-red.png');
+                    });
+
+                    $('#thumbs-down-@tt > img').mouseout(function () {
+                        $('#thumbs-down-@tt > img').attr('src', '/images/thumb-down.png');
+                    });
+
+
                     $('#a-@tt').readmore({
                         speed: 200,
                         collapsedHeight: 152,
@@ -134,18 +151,14 @@
                     });
 
                     $('#thumbs-up-@tt').click(function () {
-                        var title = $('#title-@tt').text();
-                        var description = $('#description-@tt').text();
-                        var link = $('#link-@tt').attr('href');
-                        var img = $('#img-@tt').attr('src');
-                        var publishdate = $('#date-@tt').text();
 
                         item = {}
-                        item["title"] = title;
-                        item["description"] = description;
-                        item["link"] = link;
-                        item["img"] = img;
-                        item["publishdate"] = publishdate;
+                        item["title"] = $('#title-@tt').text();;
+                        item["description"] = $('#description-@tt').text();
+                        item["link"] = $('#link-@tt').attr('href');
+                        item["img"] = $('#img-@tt').attr('src');
+                        item["publishdate"] = $('#date-@tt').text();
+                        item["status"] = true;
 
                         jsonNews.push(item);
 
@@ -153,7 +166,19 @@
                         $('#approve-@tt').delay(800).fadeOut();
                         $('#c-@tt').delay(800).fadeOut();
                     });
+
                     $('#thumbs-down-@tt').click(function () {
+
+                        item = {}
+                        item["title"] = $('#title-@tt').text();;
+                        item["description"] = $('#description-@tt').text();
+                        item["link"] = $('#link-@tt').attr('href');
+                        item["img"] = $('#img-@tt').attr('src');
+                        item["publishdate"] = $('#date-@tt').text();
+                        item["status"] = false;
+
+                        jsonNews.push(item);
+
                         $('#disapprove-@tt').delay(100).fadeIn();
                         $('#disapprove-@tt').delay(800).fadeOut();
                         $('#c-@tt').delay(800).fadeOut();

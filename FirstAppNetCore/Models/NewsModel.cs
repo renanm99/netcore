@@ -12,6 +12,7 @@ namespace FirstAppNetCore.Models
         public string Link { get; set; }
         public string Img { get; set; }
         public string PublishDate { get; set; }
+        public bool Status { get; set; }
     }
 
 }
