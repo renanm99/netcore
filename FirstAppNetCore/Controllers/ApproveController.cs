@@ -52,14 +52,14 @@ namespace FirstAppNetCore.Controllers
         }
 
 
-        public async Task<IActionResult> Index(ApproveController ia)
+        public async Task<IActionResult> Index()
         {
-
+            /*
             Program Connection = new Program();
             string EndpointUrl = Connection.EndpointUrl;
             string PrimaryKey = Connection.PrimaryKey;
             DocumentClient client;
-
+            */
 
 
             var articles = new List<FeedModel>();
@@ -67,6 +67,7 @@ namespace FirstAppNetCore.Controllers
             articles.AddRange(await GetFeed("https://blogs.microsoft.com/iot/feed/"));
             articles.AddRange(await GetFeed("https://staceyoniot.com/feed/"));
 
+            /*
 
             using (client = new DocumentClient(new Uri(EndpointUrl), PrimaryKey))
             {
@@ -79,8 +80,10 @@ namespace FirstAppNetCore.Controllers
                     articles.RemoveAll(article => article.Title == i.Title);
                 }
 
-                return View("Approve", articles.OrderBy(o => o.PublishDate));
+                return View("Approve", articles.OrderByDescending(o => o.PublishDate));
             }
+            */
+            return View("Approve", articles.OrderByDescending(o => o.PublishDate));
 
             //Bloco para gravar no banco
             /*
@@ -177,7 +180,7 @@ namespace FirstAppNetCore.Controllers
                             {
                                 Description = item.Elements().First(i => i.Name.LocalName == "description").Value,
                                 Link = item.Elements().First(i => i.Name.LocalName == "link").Value,
-                                //Fonte = doc.Root.Descendants().Elements().First(i => i.Name.LocalName == "title").Value,
+                                Fonte = doc.Root.Descendants().Elements().First(i => i.Name.LocalName == "title").Value,
                                 Img = ImgUrl(item.DescendantNodes().OfType<XCData>().Last().Value),
                                 PublishDate = ParseDate(item.Elements().First(i => i.Name.LocalName == "pubDate").Value),
                                 Title = item.Elements().First(i => i.Name.LocalName == "title").Value

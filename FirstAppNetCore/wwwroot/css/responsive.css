@@ -99,6 +99,7 @@
     .filter-items .padding-10{ padding: 5px; }
     .subs-custom .email-field{ line-height: 43px; }
     .footer-logo img{ max-width: 230px; }
+    
 }
 /* ---- End of max-width 767px CSS ---- */
 
@@ -149,3 +150,10 @@
 	
 }
 /* ---- End of max-width 380px CSS ---- */
+
+@media only screen and (max-width:767px) {
+    /* For 'mobile': */
+    .latest-fixed {
+        display: none;
+    }
+}

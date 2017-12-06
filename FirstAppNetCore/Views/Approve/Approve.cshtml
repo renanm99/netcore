@@ -34,7 +34,6 @@
     <!-- Theme CSS -->
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/responsive.css">
-    <link rel="stylesheet" href="~/css/site.css">
     <script src="js/vendor/modernizr-2.8.3.min.js"></script>
     <script src="/node_modules/readmore-js/readmore.min.js"></script>
 </head>
@@ -90,6 +89,15 @@
         vertical-align: middle;
         color: black;
     }
+
+    .latest-fixed {
+        transform: rotate(-90deg);
+        transform-origin: left top;
+        margin-left: -35px;
+        margin-top: 100px;
+        position: fixed;
+        display:inline-block;
+    }
 </style>
 
 @{ int tt = 0;
@@ -97,14 +105,14 @@
     <script>
         var jsonNews = [];
     </script>
-    <div class="container">
+    <div class="container teste" style="border-left:2px solid #757575;">
         <div class="row">
+            <div class="fz-30 latest-fixed">Latest</div>
             @foreach (var item in Model)
             {
-
-                <div id="c-@tt" class="col-xs-12 col-sm-6 col-md-4 col-lg-4" style="margin-top:30px;float:left;">
+                <div id="c-@tt" class="col-xs-12 col-sm-6 col-md-4 col-lg-4" style="margin-top:30px;">
                     <div class="grid-posts">
-                        <div style="margin-bottom:10px;box-shadow: 10px 10px 5px #888888;">
+                        <div style="margin-bottom:10px;box-shadow: 10px 10px 5px #888888;border-radius:0px 0px 20px 20px">
                             <div class="grid-post">
                                 <div id="approve-@tt" class="approveBox">Approved</div>
                                 <div id="disapprove-@tt" class="disapproveBox">Disapproved</div>
@@ -112,8 +120,8 @@
                                 <div id="a-@tt" class="post-info padding-15 ptb-20 bd-grey">
                                     <h4 id="title-@tt" class="mb-15 fw-6"><a id="link-@tt" target="_blank" href="@item.Link" class="text-dark">@item.Title</a></h4>
                                     <h6 id="description-@tt" class="text-dark">@Html.Raw(item.Description)</h6>
-                                    <!--<h6 class="text-dark">item.Fonte</h6>-->
-                                    <span style="display:none" id="date-@tt" class="date"><i class="ti-timer"></i>@item.PublishDate</span>
+                                    <h6 class="text-dark">@item.Fonte</h6>
+                                    <span id="date-@tt" class="date"><i class="ti-timer"></i>@item.PublishDate</span>
                                 </div>
                             </div>
                         </div>
@@ -127,7 +135,7 @@
                 <script>
 
                     $('#thumbs-up-@tt > img').mouseenter(function () {
-                        $('#thumbs-up-@tt > img').attr('src','/images/thumb-up-green.png');
+                        $('#thumbs-up-@tt > img').attr('src', '/images/thumb-up-green.png');
                     });
 
                     $('#thumbs-up-@tt > img').mouseout(function () {
@@ -146,8 +154,8 @@
                     $('#a-@tt').readmore({
                         speed: 200,
                         collapsedHeight: 152,
-                        moreLink: '<a href="#">More</a>',
-                        lessLink: '<a href="#">Less</a>'
+                        moreLink: '<a style="color:gray" href="#">More</a>',
+                        lessLink: '<a style="color:gray" href="#">Less</a>'
                     });
 
                     $('#thumbs-up-@tt').click(function () {

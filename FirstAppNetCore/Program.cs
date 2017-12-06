@@ -17,8 +17,6 @@ namespace FirstAppNetCore
         public string PrimaryKey = "EIhinHob5k8ihOGTENdJq0HaZ6eTnzmGXiuFHywjB5IZp6CQ1CTRdF1O4EXxds1ovFmCfLdA1xllm270YpX4Qg==";
         static DocumentClient client;
 
-
-
         public static void Main(string[] args)
         {
             var host = new WebHostBuilder()
