@@ -36,9 +36,10 @@
     <link rel="stylesheet" href="css/responsive.css">
     <script src="js/vendor/modernizr-2.8.3.min.js"></script>
     <script src="/node_modules/readmore-js/readmore.min.js"></script>
+    <script src="~/js/approve.js"></script>
 </head>
 
-<style>
+<style type="text/css">
     .thumbs {
         background-color: darkgrey;
         width: 50px;
@@ -90,24 +91,40 @@
         color: black;
     }
 
-    .latest-fixed {
+    .guial {
         transform: rotate(-90deg);
         transform-origin: left top;
         margin-left: -35px;
-        margin-top: 100px;
+        margin-top: 120px;
         position: fixed;
-        display:inline-block;
+        display: inline-block;
     }
+
+    .guial2
+    {
+        margin-top: 20px;
+        display:none;
+    }
+
+    @@media only screen and (max-device-width: 769px) {
+        .guial2 {
+            display: block;
+        }
+    }
+
+
 </style>
 
 @{ int tt = 0;
 
     <script>
         var jsonNews = [];
+        
     </script>
-    <div class="container teste" style="border-left:2px solid #757575;">
+    <div id="b" class="container teste" style="border-left:2px solid #757575;background-color:black">
         <div class="row">
-            <div class="fz-30 latest-fixed">Latest</div>
+            <div id="guiaL" class="fz-30 guial">Latest</div>
+            <div id="guiaL2" class="fz-30 guial2">Latest</div>
             @foreach (var item in Model)
             {
                 <div id="c-@tt" class="col-xs-12 col-sm-6 col-md-4 col-lg-4" style="margin-top:30px;">
@@ -133,7 +150,6 @@
                 </div>
 
                 <script>
-
                     $('#thumbs-up-@tt > img').mouseenter(function () {
                         $('#thumbs-up-@tt > img').attr('src', '/images/thumb-up-green.png');
                     });
@@ -210,6 +226,7 @@
             }
         </div>
     </div>
+    <div id="fim"></div>
 
     <button id="btnSave" class="col-xs-offset-3 btn btn-block btn-success" onclick="save()" style="width:50%;height:80px;margin-top:50px;">Save News</button>
 }
